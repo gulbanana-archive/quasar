@@ -1,0 +1,6 @@
+C:\Users\banana\Documents\quasar\dcpu\bin\Debug\dcpu.exe.config
+C:\Users\banana\Documents\quasar\dcpu\bin\Debug\dcpu.exe
+C:\Users\banana\Documents\quasar\dcpu\bin\Debug\dcpu.pdb
+C:\Users\banana\Documents\quasar\dcpu\obj\Debug\dcpu.csprojResolveAssemblyReference.cache
+C:\Users\banana\Documents\quasar\dcpu\obj\Debug\dcpu.exe
+C:\Users\banana\Documents\quasar\dcpu\obj\Debug\dcpu.pdb

@@ -1,0 +1,11 @@
+C:\Users\banana\Documents\quasar\qas\obj\Debug\qas.csprojResolveAssemblyReference.cache
+C:\Users\banana\Documents\quasar\qas\bin\Debug\qas.exe.config
+C:\Users\banana\Documents\quasar\qas\bin\Debug\qas.exe
+C:\Users\banana\Documents\quasar\qas\bin\Debug\qas.pdb
+C:\Users\banana\Documents\quasar\qas\bin\Debug\CommandLine.dll
+C:\Users\banana\Documents\quasar\qas\bin\Debug\Quasar.Common.dll
+C:\Users\banana\Documents\quasar\qas\bin\Debug\Quasar.Common.pdb
+C:\Users\banana\Documents\quasar\qas\bin\Debug\CommandLine.pdb
+C:\Users\banana\Documents\quasar\qas\bin\Debug\CommandLine.xml
+C:\Users\banana\Documents\quasar\qas\obj\Debug\qas.exe
+C:\Users\banana\Documents\quasar\qas\obj\Debug\qas.pdb

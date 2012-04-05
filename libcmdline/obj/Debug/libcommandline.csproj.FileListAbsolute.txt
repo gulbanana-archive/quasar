@@ -1,0 +1,6 @@
+C:\Users\banana\Documents\quasar\libcmdline\bin\Debug\CommandLine.XML
+C:\Users\banana\Documents\quasar\libcmdline\bin\Debug\CommandLine.dll
+C:\Users\banana\Documents\quasar\libcmdline\bin\Debug\CommandLine.pdb
+C:\Users\banana\Documents\quasar\libcmdline\obj\Debug\libcommandline.csprojResolveAssemblyReference.cache
+C:\Users\banana\Documents\quasar\libcmdline\obj\Debug\CommandLine.dll
+C:\Users\banana\Documents\quasar\libcmdline\obj\Debug\CommandLine.pdb
