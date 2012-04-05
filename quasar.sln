@@ -11,6 +11,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "common", "common\common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libcommandline", "libcmdline\libcommandline.csproj", "{5DEA2811-2FFA-4959-830B-CAD3ACACABEB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8BED6DCE-3812-41D7-994F-6E370B9BA9FE}"
+	ProjectSection(SolutionItems) = preProject
+		abi.txt = abi.txt
+		dcpu-16.txt = dcpu-16.txt
+		toolchain.txt = toolchain.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "qlk", "qlk\qlk.csproj", "{87CBF59B-92D0-4621-BEEA-DF2BD650F470}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		DebugTests|Any CPU = DebugTests|Any CPU
@@ -42,6 +51,12 @@ Global
 		{863A824E-6809-4EA7-BFB2-3889EB9EEA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{863A824E-6809-4EA7-BFB2-3889EB9EEA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{863A824E-6809-4EA7-BFB2-3889EB9EEA97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87CBF59B-92D0-4621-BEEA-DF2BD650F470}.DebugTests|Any CPU.ActiveCfg = Debug|Any CPU
+		{87CBF59B-92D0-4621-BEEA-DF2BD650F470}.DebugTests|Any CPU.Build.0 = Debug|Any CPU
+		{87CBF59B-92D0-4621-BEEA-DF2BD650F470}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87CBF59B-92D0-4621-BEEA-DF2BD650F470}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87CBF59B-92D0-4621-BEEA-DF2BD650F470}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87CBF59B-92D0-4621-BEEA-DF2BD650F470}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E8FF37C4-3EAC-440D-95FA-313DAEF1514C}.DebugTests|Any CPU.ActiveCfg = Debug|Any CPU
 		{E8FF37C4-3EAC-440D-95FA-313DAEF1514C}.DebugTests|Any CPU.Build.0 = Debug|Any CPU
 		{E8FF37C4-3EAC-440D-95FA-313DAEF1514C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

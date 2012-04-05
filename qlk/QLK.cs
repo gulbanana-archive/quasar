@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quasar.DCPU
+namespace qlk
 {
-    interface ISection
+    class QLK
     {
+        static void Main(string[] args)
+        {
+        }
     }
 }

@@ -3,7 +3,7 @@
     /// <summary>
     /// represents a relocatable or fixed address within the DCPU's heap
     /// </summary>
-    class Address
+    public class Address
     {
         public readonly bool Absolute;
         public readonly short Pointer;

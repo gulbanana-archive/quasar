@@ -1,0 +1,6 @@
+The Quasar toolchain consists of several components and specifications:
+
+dcpu, an emulator for the 0x10c DCPU-16
+qas, an assembler which produces DCPU object code from syntax trees or hand-written assembly.
+qlk, a binder which links multiple object code files into Quasar-ABI executables.
+qsc, the compiler for Quasar, a high-level nonportable systems programming language

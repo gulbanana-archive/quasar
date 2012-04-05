@@ -1,5 +1,4 @@
 C:\Users\banana\Documents\quasar\common\bin\Debug\Quasar.Common.dll
 C:\Users\banana\Documents\quasar\common\bin\Debug\Quasar.Common.pdb
-C:\Users\banana\Documents\quasar\common\obj\Debug\common.csprojResolveAssemblyReference.cache
 C:\Users\banana\Documents\quasar\common\obj\Debug\Quasar.Common.dll
 C:\Users\banana\Documents\quasar\common\obj\Debug\Quasar.Common.pdb

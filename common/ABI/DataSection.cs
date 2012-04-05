@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Quasar.DCPU;
-
-namespace Quasar.Assembler
+namespace Quasar.ABI
 {
-    class LineAssembler
+    public class DataSection : ISection
     {
-        public IInstruction Parse(string line)
+        public IList<Label> Labels
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public byte[] Assemble()
         {
             throw new NotImplementedException();
         }

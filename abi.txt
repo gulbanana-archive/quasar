@@ -1,0 +1,123 @@
+PREFACE
+
+The Quasar ABI defines executable file formats and runtime conventions for 
+execution of compiled programs on the DCPU-16. The goal of this ABI is to 
+support high-level systems programming while respecting the performance 
+limitations of the DCPU and remaining compatible with simple formats or 
+conventions used by other ABIs. The ABI data structures will be described in
+something which resembles ASN.1 or Backus-Naur form.
+
+1. OBJECT CODE FORMATS
+
+1.1 CSECT
+
+A Code Section, also known as a "text section", is a sequence of instructions
+(opcodes and arguments) to be processed directly by the DCPU-16. DCPU
+instructions are 1-3 16-bit words.
+
+Word ::= OCTET STRING SIZE(2)
+	
+Instruction ::= SEQUENCE {
+	opcode	Word,
+	value1	Word OPTIONAL,
+	value2	Word OPTIONAL
+}
+
+CodeSection ::= SEQUENCE OF Instruction
+
+1.2 DSECT
+
+A Data Section contains global and static variables, constants or data areas
+reserved by the compiler. 
+
+DataSection ::= SEQUENCE OF Word
+
+1.3 SYMTAB
+
+A Symbol Table maps symbols or "identifiers" to addresses. Symbols (subject
+to change) consist of a length and then a string of UTF-16 characters. The 
+symbol table layout is very basic, just a list of tuples, because space is
+more important than efficient retrieval.
+
+Symbol :: SEQUENCE {
+	length	Word,
+	value	SEQUENCE OF Word
+}
+
+SymbolTableEntry :: SEQUENCE {
+	identifier	Symbol,
+	address		Word
+}
+
+SymbolTable ::SEQUENCE OF SymbolTableEntry
+
+2. FILE FORMATS
+
+2.1 QRO
+
+Quasar Relocatable Object code files contain code and data, marked up for
+the benefit of the linker. They are not directly executable, using relative
+addressing and resolving many addresses to labelled stubs. A QRO represents
+a single translation unit, with one code section and one data section, as well
+as its external references and its own externally-available sections
+
+The external references are defined in special data sections consisting of 
+identifier-pointer mapping tables. All addresses are relative to the 
+translation unit. Exported references are the addresses of routines or data
+within translation unit; imported references are the stubs, with addresses 
+outside the 0x10000 limit, to which external lookups refer.
+
+RelocatableObject ::= SEQUENCE {
+	text ::= CodeSection,
+	locals ::= DataSection,
+	imports ::= SymbolTable,
+	exports ::= SymbolTable
+}
+
+2.2 QFO
+
+Quasar Freestanding Object code files contain code and data, marked up for
+the benefit of the linker. They are not directly executable, using relative
+addressing and labels. A QFO represents an entire program, with one code section and one data section, as well
+as its external references and its own externally-available sections
+
+The external references are defined in special data sections consisting of 
+identifier-pointer mapping tables. All addresses are relative to the 
+translation unit. Exported references are the addresses of routines or data
+within translation unit; imported references are the stubs, with addresses 
+outside the 0x10000 limit, to which external lookups refer.
+
+RelocatableObject ::= SEQUENCE {
+	text ::= CodeSection,
+	locals ::= DataSection,
+	imports ::= SymbolTable,
+	exports ::= SymbolTable
+}
+
+2.3 QFX
+
+Quasar Freestanding Executables are programs meant to be executed by a DCPU
+without any runtime support. They simply consist of code followed by data;
+all assemble-time labels have been fully resolved and bound. A freestanding
+executable is loaded at memory address 0 and executes from there.
+
+FreestandingExecutable ::= SEQUENCE {
+	text ::= CodeSection,
+	globals ::= DataSection
+}
+
+2.4 QRX
+
+Quasar Relocatable Executables require a loader. They consist of an ABI
+header, code sections, and data sections, with relative addressing used within
+each 
+
+<file format not yet defined>
+
+2.5 QTX
+
+Quasar Thunked Executables are freestanding, but more complex than QFX: they 
+contain a small standard prelude of subroutines to allow. In effect, they 
+are a self-hosting version of a QRX, with their own runtime built in.
+
+<file format not yet defined>

@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 using Quasar.DCPU;
+using Quasar.ABI;
 
 namespace Quasar.Assembler
 {
     class FileAssembler
     {
         private readonly LineAssembler instructionReader;
+        private readonly IExecutableFactory executableBuilder;
 
-        public FileAssembler(LineAssembler instructionReader)
+        public FileAssembler(LineAssembler instructionReader, IExecutableFactory executableBuilder)
         {
             this.instructionReader = instructionReader;
+            this.executableBuilder = executableBuilder;
         }
 
         /// <summary>
@@ -22,18 +21,18 @@ namespace Quasar.Assembler
         /// </summary>
         /// <param name="text">each line of text in the file</param>
         /// <returns>object code</returns>
-        public byte[] Assemble(IEnumerable<string> text)
+        public IExecutable Parse(IEnumerable<string> text)
         {
             List<IInstruction> code = new List<IInstruction>();
 
             foreach (var line in text)
             {
-                IInstruction instr = instructionReader.Assemble(line);
+                IInstruction instr = instructionReader.Parse(line);
                 code.Add(instr);
             }
 
-            Program obj = new Program(code);
-            return obj.GetObjectCode();
+            var csect = new CodeSection(code);
+            return executableBuilder.CreateExecutable(csect);
         }
     }
 }

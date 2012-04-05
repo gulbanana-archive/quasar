@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quasar.DCPU
+namespace Quasar.ABI
 {
-    public interface IInstruction : IAssemblable
+    public interface IExecutableFactory
     {
+        IExecutable CreateExecutable(params ISection[] sections);
     }
 }
