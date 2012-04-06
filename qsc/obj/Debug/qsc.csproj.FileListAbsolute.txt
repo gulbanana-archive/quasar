@@ -1,6 +1,0 @@
-C:\Users\banana\Documents\quasar\qsc\bin\Debug\qsc.exe.config
-C:\Users\banana\Documents\quasar\qsc\bin\Debug\qsc.exe
-C:\Users\banana\Documents\quasar\qsc\bin\Debug\qsc.pdb
-C:\Users\banana\Documents\quasar\qsc\obj\Debug\qsc.csprojResolveAssemblyReference.cache
-C:\Users\banana\Documents\quasar\qsc\obj\Debug\qsc.exe
-C:\Users\banana\Documents\quasar\qsc\obj\Debug\qsc.pdb
