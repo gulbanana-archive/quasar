@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Quasar.ABI
 {
-    public class DataSection : ISection
+    public class DataSegment : ISegment
     {
         public IList<Label> Labels
         {

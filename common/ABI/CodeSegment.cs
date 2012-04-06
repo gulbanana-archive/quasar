@@ -8,11 +8,11 @@ using Quasar.DCPU;
 
 namespace Quasar.ABI
 {
-    public class CodeSection : ISection
+    public class CodeSegment : ISegment
     {
         private readonly List<IInstruction> instructions;
 
-        public CodeSection(IEnumerable<IInstruction> text)
+        public CodeSegment(IEnumerable<IInstruction> text)
         {
             instructions = text.ToList();
         }

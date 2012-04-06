@@ -8,6 +8,6 @@ namespace Quasar.ABI
 {
     public interface IExecutableFactory
     {
-        IExecutable CreateExecutable(params ISection[] sections);
+        IExecutable CreateExecutable(IEnumerable<ISegment> segments);
     }
 }

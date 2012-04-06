@@ -3,7 +3,7 @@ using Quasar.DCPU;
 
 namespace Quasar.ABI
 {
-    public interface ISection : IAssemblable
+    public interface ISegment : IAssemblable
     {
         IList<Label> Labels { get; }
     }

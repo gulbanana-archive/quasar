@@ -12,11 +12,11 @@ namespace Quasar.ABI
     class FreestandingExecutable : IExecutable
     {
         /// <summary>executable code, located at address 0</summary>
-        private readonly CodeSection text;
+        private readonly CodeSegment text;
         /// <summary>non-executable data, located between code and heap</summary>
-        private readonly DataSection globals;
+        private readonly DataSegment globals;
 
-        public FreestandingExecutable(CodeSection csect, DataSection dsect)
+        public FreestandingExecutable(CodeSegment csect, DataSegment dsect)
         {
             text = csect;
             globals = dsect;

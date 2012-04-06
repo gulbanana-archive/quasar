@@ -1,0 +1,6 @@
+C:\Users\banana\Documents\quasar\qlk\bin\Debug\qlk.exe.config
+C:\Users\banana\Documents\quasar\qlk\bin\Debug\qlk.exe
+C:\Users\banana\Documents\quasar\qlk\bin\Debug\qlk.pdb
+C:\Users\banana\Documents\quasar\qlk\obj\Debug\qlk.csprojResolveAssemblyReference.cache
+C:\Users\banana\Documents\quasar\qlk\obj\Debug\qlk.exe
+C:\Users\banana\Documents\quasar\qlk\obj\Debug\qlk.pdb

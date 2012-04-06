@@ -9,3 +9,4 @@ C:\Users\banana\Documents\quasar\qas\bin\Debug\CommandLine.pdb
 C:\Users\banana\Documents\quasar\qas\bin\Debug\CommandLine.xml
 C:\Users\banana\Documents\quasar\qas\obj\Debug\qas.exe
 C:\Users\banana\Documents\quasar\qas\obj\Debug\qas.pdb
+C:\Users\banana\Documents\quasar\qas\bin\Debug\Irony.dll

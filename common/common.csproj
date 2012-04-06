@@ -39,15 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ABI\CodeSection.cs" />
-    <Compile Include="ABI\DataSection.cs" />
+    <Compile Include="ABI\CodeSegment.cs" />
+    <Compile Include="ABI\DataSegment.cs" />
     <Compile Include="ABI\IExecutableFactory.cs" />
     <Compile Include="DCPU\IAssemblable.cs" />
     <Compile Include="DCPU\IInstruction.cs" />
     <Compile Include="DCPU\Instructions\NamedInstruction.cs" />
     <Compile Include="ABI\IExecutable.cs" />
     <Compile Include="ABI\IRelocatable.cs" />
-    <Compile Include="ABI\ISection.cs" />
+    <Compile Include="ABI\ISegment.cs" />
     <Compile Include="ABI\Label.cs" />
     <Compile Include="DCPU\Address.cs" />
     <Compile Include="ABI\FreestandingExecutable.cs" />

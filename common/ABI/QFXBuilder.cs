@@ -8,16 +8,16 @@ namespace Quasar.ABI
 {
     public class QFXBuilder : IExecutableFactory
     {
-        public IExecutable CreateExecutable(params ISection[] sections)
+        public IExecutable CreateExecutable(IEnumerable<ISegment> segments)
         {
-            var csect = sections
-                .Where(sect => sect is CodeSection)
-                .Cast<CodeSection>()
+            var csect = segments
+                .Where(sect => sect is CodeSegment)
+                .Cast<CodeSegment>()
                 .Single();
 
-            var dsect = sections
-                .Where(sect => sect is DataSection)
-                .Cast<DataSection>()
+            var dsect = segments
+                .Where(sect => sect is DataSegment)
+                .Cast<DataSegment>()
                 .Single();
 
             return new FreestandingExecutable(csect, dsect);
