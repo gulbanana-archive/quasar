@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Quasar.DCPU;
+
 namespace Quasar.ABI
 {
     /// <summary>
@@ -22,16 +24,21 @@ namespace Quasar.ABI
             globals = dsect;
         }
 
-        public byte[] Assemble()
+        public ushort[] Assemble(AssemblyContext ctx)
         {
-            return text.Assemble()
-                .Concat(globals.Assemble())
+            return text.Assemble(ctx)
+                .Concat(globals.Assemble(ctx))
                 .ToArray();
         }
 
         public string FileExtension
         {
             get { return "qfx"; }
+        }
+
+        public ushort AssembledLength
+        {
+            get { return (ushort)(text.AssembledLength + globals.AssembledLength);}
         }
     }
 }

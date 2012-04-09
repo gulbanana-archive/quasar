@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Quasar.DCPU;
+
 namespace Quasar.ABI
 {
     public class DataSegment : ISegment
@@ -13,7 +15,18 @@ namespace Quasar.ABI
             get { throw new NotImplementedException(); }
         }
 
-        public byte[] Assemble()
+        public ushort Base
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ushort AssembledLength
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public ushort[] Assemble(AssemblyContext ctx)
         {
             throw new NotImplementedException();
         }

@@ -6,9 +6,9 @@
     public class Address
     {
         public readonly bool Absolute;
-        public readonly short Pointer;
+        public readonly ushort Pointer;
 
-        public Address(short address, bool absolute = false)
+        public Address(ushort address, bool absolute = false)
         {
             Pointer = address;
             Absolute = absolute;

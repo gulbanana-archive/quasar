@@ -10,9 +10,9 @@ namespace Quasar.ABI
         public readonly string Name;
         public readonly Address Address;
 
-        public Label(string name, Address address)
+        public Label(string name, ushort address, bool absolute = false)
         {
-            Address = address;
+            Address = new Address(address, absolute);
             Name = name;
         }
     }

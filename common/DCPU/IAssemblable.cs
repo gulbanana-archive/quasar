@@ -11,6 +11,7 @@ namespace Quasar.DCPU
     /// </summary>
     public interface IAssemblable
     {
-        byte[] Assemble();
+        ushort AssembledLength { get; }
+        ushort[] Assemble(AssemblyContext ctx);
     }
 }

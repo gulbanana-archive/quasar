@@ -11,10 +11,12 @@ namespace Quasar.ABI
     public class CodeSegment : ISegment
     {
         private readonly List<IInstruction> instructions;
+        private readonly List<Label> relativeLabels;
 
-        public CodeSegment(IEnumerable<IInstruction> text)
+        public CodeSegment(IEnumerable<IInstruction> text, IEnumerable<Label> references)
         {
             instructions = text.ToList();
+            relativeLabels = references.ToList();
         }
 
         public IList<Label> Labels
@@ -25,11 +27,6 @@ namespace Quasar.ABI
             }
         }
 
-        public byte[] Assemble()
-        {
-            throw new NotImplementedException();
-        }
-
         public IList<IInstruction> Instructions
         {
             get
@@ -37,5 +34,17 @@ namespace Quasar.ABI
                 return instructions.AsReadOnly();
             }
         }
+
+        public ushort AssembledLength
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public ushort[] Assemble(AssemblyContext ctx)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ushort Base { get; set; }
     }
 }

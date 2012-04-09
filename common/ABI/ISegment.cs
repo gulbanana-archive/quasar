@@ -6,5 +6,6 @@ namespace Quasar.ABI
     public interface ISegment : IAssemblable
     {
         IList<Label> Labels { get; }
+        ushort Base { get; set;  }
     }
 }

@@ -10,17 +10,20 @@ namespace Quasar.ABI
     {
         public IExecutable CreateExecutable(IEnumerable<ISegment> segments)
         {
-            var csect = segments
+            var csects = segments
                 .Where(sect => sect is CodeSegment)
-                .Cast<CodeSegment>()
-                .Single();
+                .Cast<CodeSegment>();
 
-            var dsect = segments
+            var dsects = segments
                 .Where(sect => sect is DataSegment)
-                .Cast<DataSegment>()
-                .Single();
+                .Cast<DataSegment>();
 
-            return new FreestandingExecutable(csect, dsect);
+            if (csects.Count() != 1 || dsects.Count() > 1)
+            {
+                throw new BadImageFormatException(".qfx: must be built from exactly one code segment and one or zero data segments");
+            }
+
+            return new FreestandingExecutable(csects.Single(), dsects.SingleOrDefault());
         }
     }
 }
