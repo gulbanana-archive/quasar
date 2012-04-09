@@ -1,25 +1,24 @@
-﻿using System.Collections.Generic;
-
-using Quasar.DCPU;
-using Quasar.ABI;
-using Irony.Parsing;
-using System;
+﻿using System;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Irony.Parsing;
+using Quasar.ABI;
 
 namespace Quasar.Assembler
 {
     class FileAssembler
     {
         private readonly IExecutableFactory executableBuilder;
+        private readonly ISegmentFactory segmentBuilder;
 
         private readonly Grammar ironyGrammar;
         private readonly Parser ironyParser;
 
-        public FileAssembler(Grammar grammar, IExecutableFactory executableBuilder)
+        public FileAssembler(Grammar grammar, ISegmentFactory segmentBuilder, IExecutableFactory executableBuilder)
         {
             this.executableBuilder = executableBuilder;
+            this.segmentBuilder = segmentBuilder;
             this.ironyGrammar = grammar;
             this.ironyParser = new Parser(ironyGrammar);
         }
@@ -31,15 +30,18 @@ namespace Quasar.Assembler
         /// <returns>object code</returns>
         public void Assemble(string filename)
         {
+            //check arguments
             if (!File.Exists(filename))
             {
                 Console.WriteLine("input file not found: " + filename);
                 return;
             }
 
+            //parse the source
             var source = File.ReadAllText(filename);
             var parseTree = ironyParser.Parse(source, filename);
 
+            //check for parse success
             if (parseTree.Status != ParseTreeStatus.Parsed)
             {
                 string[] lines = Regex.Split(source, "\r\n|\r|\n");
@@ -55,14 +57,26 @@ namespace Quasar.Assembler
                 return;
             }
 
-            Console.WriteLine(parseTree.ToXml());
-            return;
-
-            var syntaxTree = new Syntax.Program(parseTree.Root);
-            var segments = syntaxTree.Flatten();
-            var program = executableBuilder.CreateExecutable(segments);
-            var outputFile = Path.GetFileNameWithoutExtension(filename) + "." + program.FileExtension;
-            File.WriteAllBytes(outputFile, program.Assemble());
+            //build and compile an executable
+            try
+            {
+                segmentBuilder.BuildSegments(parseTree.Root);
+                var program = executableBuilder.CreateExecutable(segmentBuilder.Segments);
+                var outputFile = Path.GetFileNameWithoutExtension(filename) + "." + program.FileExtension;
+                var wordArray = program.Assemble(null);
+                var byteArray = new byte[wordArray.Length * 2];
+                Buffer.BlockCopy(wordArray, 0, byteArray, 0, byteArray.Length);
+                File.WriteAllBytes(outputFile, byteArray);
+            }
+            catch (FormatException fe)           // error from the segment builder
+            {
+                Console.WriteLine(fe.Message);
+            }
+            catch (BadImageFormatException bife) // error from the executable builder
+            {
+                Console.WriteLine(bife.Message);
+            }
         }
+
     }
 }

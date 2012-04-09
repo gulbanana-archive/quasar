@@ -45,12 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyGrammar.cs" />
+    <Compile Include="IValueBuilder.cs" />
+    <Compile Include="NotchianGrammar.cs" />
     <Compile Include="FileAssembler.cs" />
     <Compile Include="CLIOptions.cs" />
+    <Compile Include="ISegmentFactory.cs" />
     <Compile Include="QAS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Syntax\Program.cs" />
+    <Compile Include="NotchianSegmentBuilder.cs" />
+    <Compile Include="ValueBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

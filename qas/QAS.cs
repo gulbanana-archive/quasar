@@ -11,17 +11,18 @@ namespace Quasar.Assembler
             new CommandLine.CommandLineParser().ParseArguments(args, cli);
 
             if (cli.SourceFiles.Count == 0)
-                cli.SourceFiles = new string[] { "C:\\Users\\banana\\Documents\\quasar\\test\\notch-sample.s" };
+                cli.SourceFiles = new string[] { "C:\\Users\\banana\\Documents\\quasar\\test\\basic-instructions.s" };
 
             //Compose object dependency graph
             var parser = new FileAssembler(
-                new AssemblyGrammar(),
+                new NotchianGrammar(), 
+                new NotchianSegmentBuilder(
+                    new ValueBuilder()), 
                 new QFXBuilder());
             
+            //Go!!
             foreach (var inputFile in cli.SourceFiles)
-            {
                 parser.Assemble(inputFile);
-            }
         }
     }
 }
