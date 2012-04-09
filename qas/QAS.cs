@@ -1,4 +1,5 @@
-﻿using Quasar.ABI;
+﻿using System;
+using Quasar.ABI;
 
 namespace Quasar.Assembler
 {
@@ -11,7 +12,10 @@ namespace Quasar.Assembler
             new CommandLine.CommandLineParser().ParseArguments(args, cli);
 
             if (cli.SourceFiles.Count == 0)
-                cli.SourceFiles = new string[] { "C:\\Users\\banana\\Documents\\quasar\\test\\basic-instructions.s" };
+            {
+                Console.WriteLine("no input files specified");
+                return;
+            }
 
             //Compose object dependency graph
             var parser = new FileAssembler(
