@@ -39,12 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ABI\BasicExecutable.cs" />
     <Compile Include="ABI\CodeSegment.cs" />
+    <Compile Include="ABI\BasicSegment.cs" />
+    <Compile Include="ABI\QBXBuilder.cs" />
     <Compile Include="ABI\DataSegment.cs" />
     <Compile Include="ABI\IExecutableFactory.cs" />
     <Compile Include="ABI\SegmentType.cs" />
     <Compile Include="CollectionEx.cs" />
     <Compile Include="DCPU\AssemblyContext.cs" />
+    <Compile Include="DCPU\ExtendedOpcode.cs" />
     <Compile Include="DCPU\IAssemblable.cs" />
     <Compile Include="DCPU\IInstruction.cs" />
     <Compile Include="ABI\IExecutable.cs" />
@@ -55,12 +59,19 @@
     <Compile Include="ABI\FreestandingExecutable.cs" />
     <Compile Include="ABI\QFXBuilder.cs" />
     <Compile Include="DCPU\Instructions\BasicInstruction.cs" />
+    <Compile Include="DCPU\Instructions\NonBasicInstruction.cs" />
     <Compile Include="DCPU\IValue.cs" />
     <Compile Include="DCPU\Opcode.cs" />
     <Compile Include="DCPU\Register.cs" />
+    <Compile Include="DCPU\Synonym.cs" />
     <Compile Include="DCPU\Value.cs" />
+    <Compile Include="DCPU\Values\SynonymValue.cs" />
+    <Compile Include="DCPU\Values\UnresolvedSymbolPointer.cs" />
+    <Compile Include="DCPU\Values\RegisterPointer.cs" />
+    <Compile Include="DCPU\Values\LiteralPointer.cs" />
     <Compile Include="DCPU\Values\LiteralValue.cs" />
     <Compile Include="DCPU\Values\RegisterValue.cs" />
+    <Compile Include="DCPU\Values\UnresolvedSymbolValue.cs" />
     <Compile Include="MathsEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

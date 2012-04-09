@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Quasar.ABI
+namespace Quasar.DCPU
 {
-    public enum SegmentType
+    public enum Synonym : ushort
     {
-        Basic,
-        Code,
-        Data,
-        STAB
+        POP  = 0x18,
+        PEEK = 0x19,
+        PUSH = 0x1a
     }
 }

@@ -17,8 +17,8 @@ namespace Quasar.Assembler
             var parser = new FileAssembler(
                 new NotchianGrammar(), 
                 new NotchianSegmentBuilder(
-                    new ValueBuilder()), 
-                new QFXBuilder());
+                    new NotchianValueBuilder()), 
+                new QBXBuilder());
             
             //Go!!
             foreach (var inputFile in cli.SourceFiles)

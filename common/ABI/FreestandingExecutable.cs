@@ -24,13 +24,6 @@ namespace Quasar.ABI
             globals = dsect;
         }
 
-        public ushort[] Assemble(AssemblyContext ctx)
-        {
-            return text.Assemble(ctx)
-                .Concat(globals.Assemble(ctx))
-                .ToArray();
-        }
-
         public string FileExtension
         {
             get { return "qfx"; }
@@ -39,6 +32,15 @@ namespace Quasar.ABI
         public ushort AssembledLength
         {
             get { return (ushort)(text.AssembledLength + globals.AssembledLength);}
+        }
+
+        public ushort[] Assemble(AssemblyContext ctx)
+        {
+            ctx.FullyResolvedLabels = text.Labels.Concat(globals.Labels).ToList();
+
+            return text.Assemble(ctx)
+                .Concat(globals.Assemble(ctx))
+                .ToArray();
         }
     }
 }

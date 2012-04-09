@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Quasar.ABI;
+using Quasar.DCPU;
+
 namespace Quasar
 {
     public static class CollectionEx
@@ -30,6 +33,20 @@ namespace Quasar
             }
 
             return result;
+        }
+
+        public static ushort AssembledLength(this IEnumerable<IAssemblable> source)
+        {
+            return source
+                .Select(op => op.AssembledLength)
+                .Aggregate((ushort)0, MathsEx.Add);
+        }
+
+
+        public static IEnumerable<Label> Resolve(this IEnumerable<Label> source, ushort baseAddress)
+        {
+            return from label in source
+                   select new Label(label.Name, label.Address.Pointer, true);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Quasar.DCPU;
+﻿using System.Collections.Generic;
+using Quasar.DCPU;
 
 namespace Quasar.ABI
 {

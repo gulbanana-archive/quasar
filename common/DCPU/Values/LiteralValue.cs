@@ -10,7 +10,6 @@ namespace Quasar.DCPU.Values
     public class LiteralValue : IValue
     {
         private const ushort maxDirectValue = 0x1f;
-        private const ushort directValueOffset = 0x20;
 
         private readonly ushort literal;
 
@@ -43,7 +42,7 @@ namespace Quasar.DCPU.Values
             if (literal > maxDirectValue)
                 return (ushort)(Value.NextWordLiteral);
             else
-                return (ushort)(literal + directValueOffset);
+                return (ushort)(literal + Value.DirectLiteral);
         }
 
         public override string ToString()

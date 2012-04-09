@@ -54,8 +54,8 @@ namespace Quasar.Assembler
 
             var address = new NonTerminal("address");
             var pointer = new NonTerminal("pointer");
+            var target = new NonTerminal("target");
             var register_indirection = new NonTerminal("register_indirection");
-            var address_operator = new NonTerminal("address_operator");
             #endregion symbols
 
             #region parser settings
@@ -91,9 +91,9 @@ namespace Quasar.Assembler
             synonym.Rule = ToTerm("POP") | "PEEK" | "PUSH";
 
             address.Rule = pointer | symbol;
-            pointer.Rule = ToTerm("[") + (literal | register | register_indirection) + ToTerm("]");
-            register_indirection.Rule = (register + address_operator + literal) | (literal + address_operator + register);
-            address_operator.Rule = ToTerm("+") | "-";
+            pointer.Rule = ToTerm("[") + target + ToTerm("]");
+            target.Rule = literal | register | register_indirection;
+            register_indirection.Rule = (register + ToTerm("+") + literal) | (literal + ToTerm("+") + register);
 
             this.Root = program;
 #endregion

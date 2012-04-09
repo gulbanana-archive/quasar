@@ -8,43 +8,19 @@ using Quasar.DCPU;
 
 namespace Quasar.ABI
 {
-    public class CodeSegment : ISegment
+    /// <summary>
+    /// relocatable segment type containing only instructions
+    /// </summary>
+    public class CodeSegment : BasicSegment
     {
-        private readonly List<IInstruction> instructions;
-        private readonly List<Label> relativeLabels;
-
-        public CodeSegment(IEnumerable<IInstruction> text, IEnumerable<Label> references)
-        {
-            instructions = text.ToList();
-            relativeLabels = references.ToList();
-        }
-
-        public IList<Label> Labels
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public IList<IInstruction> Instructions
-        {
-            get
-            {
-                return instructions.AsReadOnly();
-            }
-        }
-
-        public ushort AssembledLength
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public ushort[] Assemble(AssemblyContext ctx)
+        public CodeSegment(IEnumerable<IInstruction> text, IEnumerable<Label> references) : base(text, references)
         {
             throw new NotImplementedException();
+            foreach (var instruction in text)
+            {
+                //if instruction is data
+                //throw
+            }
         }
-
-        public ushort Base { get; set; }
     }
 }

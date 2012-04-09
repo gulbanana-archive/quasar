@@ -37,7 +37,7 @@ namespace Quasar.Assembler
             {
                 //a program is divided into segments separated by directives
                 case "program":
-                    InitialiseSegment(".text");
+                    context = SegmentType.Basic;
                     BuildSegments(visitee.ChildNodes[0]);
                     FinaliseSegment();
                     break;
@@ -67,12 +67,17 @@ namespace Quasar.Assembler
                 //whenever an instruction is parsed, we first pop the label stack to the current relative address
                 case "basic_instruction":
                     ApplyLabels();
-                    var op = visitee.ChildNodes[0].ChildNodes[0].Token.Text;
+                    var bop = visitee.ChildNodes[0].ChildNodes[0].Token.Text;
                     var dest = valueBuilder.BuildValue(visitee.ChildNodes[1]);
                     var src = valueBuilder.BuildValue(visitee.ChildNodes[3]); //node 2 is a comma!
-                    //new BasicInstruction(op, dest, src);
+                    instructions.Enqueue(new BasicInstruction(bop, dest, src));
+                    break;
 
-                    Console.WriteLine("basic_instruction {0} {1},{2}", op, dest, src);
+                case "nonbasic_instruction":
+                    ApplyLabels();
+                    var nbop = visitee.ChildNodes[0].ChildNodes[0].Token.Text;
+                    var arg = valueBuilder.BuildValue(visitee.ChildNodes[1]);
+                    instructions.Enqueue(new NonBasicInstruction(nbop, arg));
                     break;
 
                 //A parse element we don't know about - this should not happen!
@@ -94,9 +99,7 @@ namespace Quasar.Assembler
 
         private void ApplyLabels()
         {
-            ushort segmentRelativeAddress = instructions
-                .Select(op => op.AssembledLength)
-                .Aggregate((ushort)0, MathsEx.Add);
+            ushort segmentRelativeAddress = instructions.AssembledLength();
 
             foreach (var symbol in symbolicLabels.PopAll())
                 relativeLabels.Enqueue(new Label(symbol, segmentRelativeAddress));
@@ -107,11 +110,11 @@ namespace Quasar.Assembler
             switch (directive)
             {
                 case ".text":
-                    context = SegmentType.CSECT;
+                    context = SegmentType.Code;
                     break;
 
                 case ".data":
-                    context = SegmentType.DSECT;
+                    context = SegmentType.Data;
                     break;
 
                 default:
@@ -127,20 +130,26 @@ namespace Quasar.Assembler
         private void FinaliseSegment()
         {
             if (instructions.Count > 0)
+            {
+                ISegment newSegment;
+
                 switch (context)
                 {
-                    case SegmentType.CSECT:
-                        var newSegment = new CodeSegment(instructions.DequeueAll(), relativeLabels.DequeueAll());
-                        newSegment.Base = segments
-                            .Select(seg => seg.AssembledLength)
-                            .Aggregate((ushort)0, MathsEx.Add);
+                    case SegmentType.Basic:
+                        newSegment = new BasicSegment(instructions.DequeueAll(), relativeLabels.DequeueAll());
+                        break;
 
-                        segments.Add(newSegment);
+                    case SegmentType.Code:
+                        newSegment = new CodeSegment(instructions.DequeueAll(), relativeLabels.DequeueAll());
+                        newSegment.Base = segments.AssembledLength();
                         break;
 
                     default:
                         throw new FormatException("Unimplemented segment type " + context);
                 }
+
+                segments.Add(newSegment);
+            }
         }
 
         private void BuildInstruction(ParseTreeNode node)

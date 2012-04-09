@@ -1,5 +1,4 @@
 ﻿using Quasar.DCPU;
-
 namespace Quasar.ABI
 {
     /// <summary>

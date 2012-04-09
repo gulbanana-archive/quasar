@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Irony.Parsing;
 using Quasar.ABI;
+using Quasar.DCPU;
 
 namespace Quasar.Assembler
 {
@@ -57,15 +58,25 @@ namespace Quasar.Assembler
                 return;
             }
 
-            //build and compile an executable
             try
             {
+                //build an executable representation in memory
                 segmentBuilder.BuildSegments(parseTree.Root);
                 var program = executableBuilder.CreateExecutable(segmentBuilder.Segments);
                 var outputFile = Path.GetFileNameWithoutExtension(filename) + "." + program.FileExtension;
-                var wordArray = program.Assemble(null);
+
+                //generate machine code
+                var wordArray = program.Assemble(new AssemblyContext());
+
                 var byteArray = new byte[wordArray.Length * 2];
+                for (int i = 0; i < wordArray.Length; i++)
+                {
+                    var bytes = BitConverter.GetBytes(wordArray[i]);
+                    byteArray[i * 2] = bytes[0];
+                    byteArray[i * 2 + 1] = bytes[1];
+                }
                 Buffer.BlockCopy(wordArray, 0, byteArray, 0, byteArray.Length);
+
                 File.WriteAllBytes(outputFile, byteArray);
             }
             catch (FormatException fe)           // error from the segment builder
