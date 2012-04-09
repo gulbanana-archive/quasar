@@ -63,7 +63,7 @@ namespace Quasar.Assembler
                 //build an executable representation in memory
                 segmentBuilder.BuildSegments(parseTree.Root);
                 var program = executableBuilder.CreateExecutable(segmentBuilder.Segments);
-                var outputFile = Path.GetFileNameWithoutExtension(filename) + "." + program.FileExtension;
+                var outputFile = Path.GetDirectoryName(filename) + "/" + Path.GetFileNameWithoutExtension(filename) + "." + program.FileExtension;
 
                 //generate machine code
                 var wordArray = program.Assemble(new AssemblyContext());
