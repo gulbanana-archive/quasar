@@ -64,13 +64,7 @@ namespace Quasar.Assembler
                         visitee.Token != null ?
                             string.Format(" token=\"{0}\"", visitee.Token.Text) :
                             "");
-                    //throw new FormatException(nodeInfo);
-                    Console.WriteLine(nodeInfo);
-
-                    foreach (var node in visitee.ChildNodes)
-                        BuildValue(node);
-
-                    return null;
+                    throw new FormatException(nodeInfo);
             }
         }
 
@@ -95,16 +89,16 @@ namespace Quasar.Assembler
                 case "Z":
                 case "I":
                 case "J":
-                    return new RegisterPointer(visitee.Token.Text, 0);
+                    return new RegisterPointer(visitee.Token.Text, null);
                 
-                case "register_indirection":
+                case "indirection":
                     var left = visitee.ChildNodes[0];
                     var right = visitee.ChildNodes[2];
 
-                    if (left.Term.Name == "literal")
-                        return new RegisterPointer(right.ChildNodes[0].Token.Text, (ushort)(int)left.Token.Value);
+                    if (left.Term.Name == "offset")
+                        return new RegisterPointer(right.ChildNodes[0].Token.Text, BuildValue(left.ChildNodes[0]));
                     else
-                        return new RegisterPointer(left.ChildNodes[0].Token.Text, (ushort)(int)right.Token.Value);
+                        return new RegisterPointer(left.ChildNodes[0].Token.Text, BuildValue(right.ChildNodes[0]));
 
                 //A parse element we don't know about - this should not happen!
                 default:
@@ -114,13 +108,7 @@ namespace Quasar.Assembler
                         visitee.Token != null ?
                             string.Format(" token=\"{0}\"", visitee.Token.Text) :
                             "");
-                    //throw new FormatException(nodeInfo);
-                    Console.WriteLine(nodeInfo);
-
-                    foreach (var node in visitee.ChildNodes)
-                        BuildAddress(node);
-
-                    return null;
+                    throw new FormatException(nodeInfo);
             }
         }
     }

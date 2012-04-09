@@ -20,9 +20,13 @@ namespace Quasar.Assembler
             #region symbols
             var directive = new IdentifierTerminal("directive");
             directive.AllFirstChars = ".";
+
             var label = new IdentifierTerminal("label", IdOptions.IsNotKeyword);
             label.AllFirstChars = ":";
+
             var symbol = new IdentifierTerminal("symbol", IdOptions.IsNotKeyword);
+
+            var character_string = new StringLiteral("character_string", "\"");
 
             var literal = new NumberLiteral("literal", NumberOptions.IntOnly);
             literal.AddPrefix("0x", NumberOptions.Hex);
@@ -42,7 +46,10 @@ namespace Quasar.Assembler
             var instruction = new NonTerminal("instruction");
             var basic = new NonTerminal("basic_instruction");
             var nonbasic = new NonTerminal("nonbasic_instruction");
-            var datum = new NonTerminal("macro");
+
+            var data = new NonTerminal("data");
+            var data_list = new NonTerminal("data_list");
+            var datum = new NonTerminal("datum");
 
             var basic_opcode = new NonTerminal("basic_opcode");
             var nonbasic_opcode = new NonTerminal("nonbasic_opcode");
@@ -55,7 +62,8 @@ namespace Quasar.Assembler
             var address = new NonTerminal("address");
             var pointer = new NonTerminal("pointer");
             var target = new NonTerminal("target");
-            var register_indirection = new NonTerminal("register_indirection");
+            var indirection = new NonTerminal("indirection");
+            var offset = new NonTerminal("offset");
             #endregion symbols
 
             #region parser settings
@@ -75,10 +83,14 @@ namespace Quasar.Assembler
             label_opt.Rule = label | Empty;
 
             //instructions
-            instruction.Rule = basic | nonbasic | datum;
+            instruction.Rule = basic | nonbasic | data;
             basic.Rule = basic_opcode + value + "," + value;
             nonbasic.Rule = nonbasic_opcode + value;
-            datum.Rule = ToTerm("DAT");
+
+            //data
+            data.Rule = ToTerm("DAT") + data_list;
+            data_list.Rule = MakeListRule(data_list, ToTerm(","), datum, TermListOptions.PlusList);
+            datum.Rule = literal | character_string;
 
             //opcodes
             basic_opcode.Rule = ToTerm("SET") | "ADD" | "SUB" | "MUL" | "DIV" | "MOD" | "SHL" | "SHR" | "AND" | "BOR" | "XOR" | "IFE" | "IFN" | "IFG" | "IFB";
@@ -92,11 +104,12 @@ namespace Quasar.Assembler
 
             address.Rule = pointer | symbol;
             pointer.Rule = ToTerm("[") + target + ToTerm("]");
-            target.Rule = literal | register | register_indirection;
-            register_indirection.Rule = (register + ToTerm("+") + literal) | (literal + ToTerm("+") + register);
+            target.Rule = literal | register | indirection;
+            indirection.Rule = (register + ToTerm("+") + offset) | (offset + ToTerm("+") + register);
+            offset.Rule = literal | symbol;
 
             this.Root = program;
-#endregion
+            #endregion
             
         }
     }

@@ -27,11 +27,18 @@ namespace Quasar.DCPU.Values
 
         public ushort[] Assemble(AssemblyContext ctx)
         {
-            return new[]{ctx.FullyResolvedLabels
+            try
+            {
+                return new[]{ctx.FullyResolvedLabels
                 .Where(label => label.Name == symbol)
                 .Where(label => label.Address.Absolute)
                 .Select(label => label.Address.Pointer)
                 .Single()};
+            }
+            catch (InvalidOperationException ioe)
+            {
+                throw new FormatException("label not found: " + symbol, ioe);
+            }
         }
 
         public override string ToString()

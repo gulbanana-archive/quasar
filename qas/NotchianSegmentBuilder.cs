@@ -31,20 +31,20 @@ namespace Quasar.Assembler
             segments = new List<ISegment>();
         }
 
-        public void BuildSegments(ParseTreeNode visitee)
+        public void BuildSegments(ParseTreeNode node)
         {
-            switch (visitee.Term.Name)
+            switch (node.Term.Name)
             {
                 //a program is divided into segments separated by directives
                 case "program":
                     context = SegmentType.Basic;
-                    BuildSegments(visitee.ChildNodes[0]);
+                    BuildSegments(node.ChildNodes[0]);
                     FinaliseSegment();
                     break;
 
                 case "directive":
                     FinaliseSegment();
-                    InitialiseSegment(visitee.Token.Text);
+                    InitialiseSegment(node.Token.Text);
                     break;
 
                 //many rules just structure the syntax and have no semantic meaning
@@ -54,45 +54,65 @@ namespace Quasar.Assembler
                 case "labelled_instruction":
                 case "instruction":
                 case "label_opt":
-                    foreach (var child in visitee.ChildNodes)
+                case "DAT":
+                case "data_list":
+                case "datum":
+                    foreach (var child in node.ChildNodes)
                         BuildSegments(child);
                     break;
 
                 //add labels to a stack which is applied whenever we reach an instruction
                 case "label":
-                    string labelName = visitee.Token.Text.TrimStart(':');
+                    string labelName = node.Token.Text.TrimStart(':');
                     symbolicLabels.Push(labelName);
                     break;
 
                 //whenever an instruction is parsed, we first pop the label stack to the current relative address
                 case "basic_instruction":
                     ApplyLabels();
-                    var bop = visitee.ChildNodes[0].ChildNodes[0].Token.Text;
-                    var dest = valueBuilder.BuildValue(visitee.ChildNodes[1]);
-                    var src = valueBuilder.BuildValue(visitee.ChildNodes[3]); //node 2 is a comma!
+                    var bop = node.ChildNodes[0].ChildNodes[0].Token.Text;
+                    var dest = valueBuilder.BuildValue(node.ChildNodes[1]);
+                    var src = valueBuilder.BuildValue(node.ChildNodes[3]); //node 2 is a comma!
                     instructions.Enqueue(new BasicInstruction(bop, dest, src));
                     break;
 
                 case "nonbasic_instruction":
                     ApplyLabels();
-                    var nbop = visitee.ChildNodes[0].ChildNodes[0].Token.Text;
-                    var arg = valueBuilder.BuildValue(visitee.ChildNodes[1]);
+                    var nbop = node.ChildNodes[0].ChildNodes[0].Token.Text;
+                    var arg = valueBuilder.BuildValue(node.ChildNodes[1]);
                     instructions.Enqueue(new NonBasicInstruction(nbop, arg));
+                    break;
+
+                case "data":
+                    ApplyLabels();
+                    foreach (var child in node.ChildNodes)
+                        BuildSegments(child);
+                    break;
+
+                //create pseudo-instructions for constant data
+                case "literal":
+                    var literal = (ushort)(int)node.Token.Value;
+                    instructions.Enqueue(new LiteralData(literal));
+                    break;
+
+                case "character_string":
+                    var characters = (string)node.Token.Value;
+                    instructions.Enqueue(new CharacterData(characters));
                     break;
 
                 //A parse element we don't know about - this should not happen!
                 default:
                     string nodeInfo = string.Format(
                         "Unknown node <{0}{1}>", 
-                        visitee.Term.Name,
-                        visitee.Token != null ?
-                            string.Format(" token=\"{0}\"", visitee.Token.Text) :
+                        node.Term.Name,
+                        node.Token != null ?
+                            string.Format(" token=\"{0}\"", node.Token.Text) :
                             "");
                     //throw new FormatException(nodeInfo);
                     Console.WriteLine(nodeInfo);
 
-                    foreach (var node in visitee.ChildNodes)
-                        BuildSegments(node);
+                    foreach (var child in node.ChildNodes)
+                        BuildSegments(child);
                     break;
             }
         }
@@ -151,17 +171,5 @@ namespace Quasar.Assembler
                 segments.Add(newSegment);
             }
         }
-
-        private void BuildInstruction(ParseTreeNode node)
-        {
-            Console.WriteLine("\n-- <instruction> --");
-
-            foreach (var node2 in node.ChildNodes)
-                BuildSegments(node2);
-
-            Console.WriteLine("-- </instruction> --");
-        }
-
-
     }
 }

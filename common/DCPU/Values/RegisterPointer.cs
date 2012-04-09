@@ -9,9 +9,9 @@ namespace Quasar.DCPU.Values
     public class RegisterPointer : IValue
     {
         private readonly Register reg;
-        private ushort displacement;
+        private IValue displacement;
 
-        public RegisterPointer(string registerName, ushort offset)
+        public RegisterPointer(string registerName, IValue offset)
         {
             displacement = offset;
             reg = (Register)Enum.Parse(typeof(Register), registerName.ToUpper());
@@ -19,7 +19,7 @@ namespace Quasar.DCPU.Values
 
         public ushort DirectAssemble()
         {
-            if (displacement == 0)
+            if (displacement == null)
                 return (ushort)(reg + (ushort)Value.RegisterAddress);
             else
                 return (ushort)(reg + (ushort)Value.RegDispAddress);
@@ -29,7 +29,7 @@ namespace Quasar.DCPU.Values
         {
             get
             {
-                if (displacement == 0)
+                if (displacement == null)
                     return 0;
                 else
                     return 1;
@@ -38,19 +38,18 @@ namespace Quasar.DCPU.Values
 
         public ushort[] Assemble(AssemblyContext ctx)
         {
-            if (displacement == 0)
+            if (displacement == null)
                 return new ushort[] { };
             else
-                return new ushort[] { displacement };
+                return displacement.Assemble(ctx);
         }
 
         public override string ToString()
         {
-            if (displacement > 0)
+            if (displacement == null)
+                return string.Format("[{0}]", Enum.GetName(typeof(Register), reg));
+            else
                 return string.Format("[{0}+{1}]", Enum.GetName(typeof(Register), reg), displacement);
-            else if (displacement < 0)
-                return string.Format("[{0}-{1}]", Enum.GetName(typeof(Register), reg), displacement);
-            else return string.Format("[{0}]", Enum.GetName(typeof(Register), reg));
         }
     }
 }

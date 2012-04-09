@@ -59,6 +59,8 @@
     <Compile Include="ABI\FreestandingExecutable.cs" />
     <Compile Include="ABI\QFXBuilder.cs" />
     <Compile Include="DCPU\Instructions\BasicInstruction.cs" />
+    <Compile Include="DCPU\Instructions\CharacterData.cs" />
+    <Compile Include="DCPU\Instructions\LiteralData.cs" />
     <Compile Include="DCPU\Instructions\NonBasicInstruction.cs" />
     <Compile Include="DCPU\IValue.cs" />
     <Compile Include="DCPU\Opcode.cs" />
