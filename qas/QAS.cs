@@ -13,7 +13,7 @@ namespace Quasar.Assembler
 
             if (cli.SourceFiles.Count == 0)
             {
-                Console.WriteLine("no input files specified");
+                Console.WriteLine(cli.Usage());
                 return;
             }
 

@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -48,7 +49,9 @@
     <Compile Include="ABI\SegmentType.cs" />
     <Compile Include="CollectionEx.cs" />
     <Compile Include="DCPU\AssemblyContext.cs" />
-    <Compile Include="DCPU\ExtendedOpcode.cs" />
+    <Compile Include="DCPU\Core.cs" />
+    <Compile Include="DCPU\Exceptions\DCPUException.cs" />
+    <Compile Include="DCPU\Instructions\ExtendedOpcode.cs" />
     <Compile Include="DCPU\IAssemblable.cs" />
     <Compile Include="DCPU\IInstruction.cs" />
     <Compile Include="ABI\IExecutable.cs" />
@@ -63,10 +66,10 @@
     <Compile Include="DCPU\Instructions\LiteralData.cs" />
     <Compile Include="DCPU\Instructions\NonBasicInstruction.cs" />
     <Compile Include="DCPU\IValue.cs" />
-    <Compile Include="DCPU\Opcode.cs" />
-    <Compile Include="DCPU\Register.cs" />
-    <Compile Include="DCPU\Synonym.cs" />
-    <Compile Include="DCPU\Value.cs" />
+    <Compile Include="DCPU\ISA\Opcode.cs" />
+    <Compile Include="DCPU\ISA\Register.cs" />
+    <Compile Include="DCPU\ISA\Synonym.cs" />
+    <Compile Include="DCPU\ISA\Value.cs" />
     <Compile Include="DCPU\Values\SynonymValue.cs" />
     <Compile Include="DCPU\Values\UnresolvedSymbolPointer.cs" />
     <Compile Include="DCPU\Values\RegisterPointer.cs" />

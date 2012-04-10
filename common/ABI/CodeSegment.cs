@@ -15,12 +15,13 @@ namespace Quasar.ABI
     {
         public CodeSegment(IEnumerable<IInstruction> text, IEnumerable<Label> references) : base(text, references)
         {
-            throw new NotImplementedException();
             foreach (var instruction in text)
             {
                 //if instruction is data
                 //throw
             }
+
+            throw new NotImplementedException();
         }
     }
 }
